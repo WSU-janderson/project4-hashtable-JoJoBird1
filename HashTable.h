@@ -46,7 +46,7 @@ public:
         type = BucketType::NORMAL;
     }
 
-// is empty returns type 
+// is empty returns type
     bool isEmpty() const {
         return type == BucketType::ESS || type == BucketType::EAR;
     }
@@ -104,6 +104,7 @@ public:
     double alpha() const;
     size_t capacity() const;
     size_t size() const;
+    void resize();
 
 // friend output operator
     friend ostream& operator<<(ostream& os, const HashTable& ht);
