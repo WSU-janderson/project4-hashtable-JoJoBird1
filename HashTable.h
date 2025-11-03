@@ -20,11 +20,65 @@ enum class BucketType {NORMAL, ESS, EAR};
  * Class - HashTableBucket
  */
 class HashTableBucket {
+// private variables
+private:
+    string key;
+    size_t value;
+    BucketType type;
+
+// public variables
+public:
+
 // default constructor
-HashTableBucket();
+    HashTableBucket() : key(" "), value(0), type(BucketType::ESS) {
+
+    }
 
 // parameterized constructor
-HashTableBucket(const std::string& key, const size_t& value);
+    HashTableBucket(const std::string& k, const size_t& v)
+        : key(k), value(v), type(BucketType::NORMAL) {
+
+    }
+
+    void load(const std:: string& k, const size_t& v) {
+        key = key;
+        value = value;
+        type = BucketType::NORMAL;
+    }
+
+    bool isEmpty() const {
+        return type == BucketType::ESS || type == BucketType::EAR;
+    }
+
+// getters
+    string& getKey() const;
+    size_t getValue() const;
+
+// setters
+    void makeNormal() {
+        type = BucketType::NORMAL;
+    }
+
+    void makeEss () {
+        type = BucketType::ESS;
+    }
+
+    void makeEar () {
+        type = BucketType::EAR;
+    }
+
+// method to check if empty since start
+    bool isEmptySinceStart () {
+       return type == BucketType::ESS;
+    }
+
+// method to check if empty after removal
+    bool isEmptyAfterRemove () {
+        return type == BucketType::EAR;
+    }
+
+// friend output operator
+    friend ostream& operator<<(ostream& os, const HashTableBucket& bucket);
 };
 
 /**
@@ -50,7 +104,8 @@ public:
     size_t capacity() const;
     size_t size() const;
 
-
+// friend output operator
+    friend ostream& operator<<(ostream& os, const HashTable& ht);
 };
 
 #endif

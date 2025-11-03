@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include "HashTable.h"
-
+#include <optional>
 using namespace std;
 
 
@@ -14,8 +14,10 @@ using namespace std;
 * Only a single constructor that takes an initial capacity for the table is
 * necessary. If no capacity is given, it defaults to 8 initially
 */
-HashTable::HashTable(size_t initCapacity) {
-
+HashTable::HashTable(size_t initCapacity)
+ : tCapacity(initCapacity), count(0)
+{
+ table.resize(tCapacity)
 }
 
 /**
