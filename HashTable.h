@@ -6,6 +6,10 @@
 
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
+#include <optional>
+#include <string>
+#include <vector>
+using namespace std;
 
 /**
  * Class - BucketType
@@ -20,7 +24,7 @@ class HashTableBucket {
 HashTableBucket();
 
 // parameterized constructor
-HashTableBucket(const string& key, const size_t& value);
+HashTableBucket(const std::string& key, const size_t& value);
 };
 
 /**
@@ -29,7 +33,7 @@ HashTableBucket(const string& key, const size_t& value);
 class HashTable {
 // Private Variables
 private:
-    std::vector<HashTableBucket> table;
+    vector<HashTableBucket> table;
     size_t tCapacity;
     size_t count;
 

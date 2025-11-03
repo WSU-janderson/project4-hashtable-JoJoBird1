@@ -14,7 +14,7 @@ using namespace std;
 * Only a single constructor that takes an initial capacity for the table is
 * necessary. If no capacity is given, it defaults to 8 initially
 */
-HashTable::HashTable(size_t initCapacity = 8) {
+HashTable::HashTable(size_t initCapacity) {
 
 }
 
@@ -24,7 +24,7 @@ HashTable::HashTable(size_t initCapacity = 8) {
 * unsucessful, such as when a duplicate is attempted to be inserted, the method
 * should return false
 */
-bool HashTable::insert(const std::string$ key, const size_t& value) {
+bool HashTable::insert(const std::string& key, const size_t& value) {
 
 }
 /**
