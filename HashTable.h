@@ -46,6 +46,7 @@ public:
         type = BucketType::NORMAL;
     }
 
+// is empty returns type 
     bool isEmpty() const {
         return type == BucketType::ESS || type == BucketType::EAR;
     }

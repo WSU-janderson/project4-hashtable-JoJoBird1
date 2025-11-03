@@ -17,7 +17,7 @@ using namespace std;
 HashTable::HashTable(size_t initCapacity)
  : tCapacity(initCapacity), count(0)
 {
- table.resize(tCapacity)
+ table.resize(tCapacity);
 }
 
 /**
