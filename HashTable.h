@@ -1,5 +1,7 @@
 /**
- * HashTable.h
+ * Name: Jordan Wilson
+ * Project 4: Hashtable
+ * File: HashTable.h
  */
 
 #ifndef HASHTABLE_H
