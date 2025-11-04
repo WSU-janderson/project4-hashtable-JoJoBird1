@@ -30,7 +30,7 @@ private:
 public:
 
 // default constructor
-    HashTableBucket() : key(" "), value(0), type(BucketType::ESS) {
+    HashTableBucket() : key(""), value(0), type(BucketType::ESS) {
 
     }
 
@@ -41,8 +41,8 @@ public:
     }
 
     void load(const std:: string& k, const size_t& v) {
-        key = key;
-        value = value;
+        key = k;
+        value = v;
         type = BucketType::NORMAL;
     }
 
@@ -59,6 +59,10 @@ public:
         return value;
     }
 
+    size_t& getValue() {
+        return value;
+    }
+
 // setters
     void makeNormal() {
         type = BucketType::NORMAL;
@@ -66,6 +70,8 @@ public:
 
     void makeEss () {
         type = BucketType::ESS;
+        key = "";
+        value = 0;
     }
 
     void makeEar () {
@@ -75,12 +81,12 @@ public:
     }
 
 // method to check if empty since start
-    bool isEmptySinceStart () {
+    bool isEmptySinceStart () const {
        return type == BucketType::ESS;
     }
 
 // method to check if empty after removal
-    bool isEmptyAfterRemove () {
+    bool isEmptyAfterRemove () const {
         return type == BucketType::EAR;
     }
 

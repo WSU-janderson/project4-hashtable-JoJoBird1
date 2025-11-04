@@ -59,7 +59,23 @@ bool HashTable::insert(const std::string& key, const size_t& value) {
  * Marking a bucket as empty after removed.
 */
 bool HashTable::remove(const std::string& key) {
+ size_t index = hash<std::string>{}(key) % tCapacity;
 
+ for (size_t i = 0; i < tCapacity; i++) {
+  size_t pIndex = (index + i) % tCapacity;
+  HashTableBucket& bucket = table[pIndex];
+
+  if (bucket.isEmptySinceStart()) {
+   return false;
+  }
+
+  if (bucket.isNormal() && bucket.getKey() == key) {
+   bucket.makeEar();
+   count--;
+   return true;
+  }
+ }
+ return false;
 }
 
 /**
@@ -68,7 +84,21 @@ bool HashTable::remove(const std::string& key) {
  * Otherwise, will return false
 */
 bool HashTable::contains(const string& key) const {
+ size_t index = hash<std::string>{}(key) % tCapacity;
 
+ for (size_t i = 0; i < tCapacity; i++) {
+  size_t pIndex = (index + 1) % tCapacity;
+  const HashTableBucket& bucket = table[pIndex];
+
+  if (bucket.isEmptySinceStart()) {
+   return false;
+  }
+
+  if (bucket.isNormal() && bucket.getKey() == key) {
+   return true;
+  }
+ }
+ return false;
 }
 
 /**
