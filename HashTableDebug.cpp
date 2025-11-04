@@ -1,9 +1,14 @@
 /**
- * HashTableDebug.cpp
+ * Name: Jordan Wilson
+ * Project 4: Hashtables
+ * File: HashTableDebug.cpp
  *
- * Write your tests in this file
+ * Tests
  */
 #include <iostream>
+#include <optional>
+#include "HashTable.h"
+using namespace std;
 
 int main() {
     std::cout << "Hello, World!" << std::endl;

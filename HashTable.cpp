@@ -5,12 +5,15 @@
  */
 
 #include <iostream>
-#include "HashTable.h"
 #include <optional>
+#include <stdexcept>
+#include "HashTable.h"
+
 using namespace std;
 
 
 /**
+ * Method: constructor
 * Only a single constructor that takes an initial capacity for the table is
 * necessary. If no capacity is given, it defaults to 8 initially
 */
@@ -21,24 +24,46 @@ HashTable::HashTable(size_t initCapacity)
 }
 
 /**
-* Insert a new key-value pair into the table. Duplicate keys are NOT allowed. The
-* method should return true if the insertion was successful. If the insertion was
-* unsucessful, such as when a duplicate is attempted to be inserted, the method
-* should return false
+ * Method: insert
+ * Checks if the new key-value pair being inserted into the table is a duplicate or not.
+ * If there isn't a duplicate it will return true,
+ * Otherwise if a duplicate is found it'll return false.
 */
 bool HashTable::insert(const std::string& key, const size_t& value) {
+ if (alpha() > 0.5) {
+  resize();
+ }
+ size_t index = hash<std::string>{} (key) % tCapacity;
 
+ for (size_t i = 0; i < tCapacity; i++) {
+  size_t pIndex = (index + i) % tCapacity;
+
+  HashTableBucket& bucket = table[pIndex];
+
+  if (bucket.isNormal() && bucket.getKey() == key) {
+   return false;
+  }
+
+  if (bucket.isEmpty()) {
+   bucket.load(key, value);
+   count++;
+   return true;
+  }
+ }
+ return false;
 }
 /**
-* If the key is in the table, remove will “erase” the key-value pair from the
-* table. This might just be marking a bucket as empty-after-remove
+ * Method: remove
+ * If the key is found in the table it will erase the key-value pair from the table.
+ * Marking a bucket as empty after removed.
 */
 bool HashTable::remove(const std::string& key) {
 
 }
 /**
-* contains returns true if the key is in the table and false if the key is not in
-* the table.
+ * Method: contains
+ * Will return true if key is in table
+ * Otherwise, will return false
 */
 bool HashTable::contains(const string& key) const {
 

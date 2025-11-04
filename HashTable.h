@@ -52,8 +52,12 @@ public:
     }
 
 // getters
-    string& getKey() const;
-    size_t getValue() const;
+    const std::string& getKey() const {
+        return key;
+    }
+    size_t getValue() const {
+        return value;
+    }
 
 // setters
     void makeNormal() {
@@ -66,6 +70,8 @@ public:
 
     void makeEar () {
         type = BucketType::EAR;
+        key = "";
+        value = 0;
     }
 
 // method to check if empty since start
@@ -76,6 +82,11 @@ public:
 // method to check if empty after removal
     bool isEmptyAfterRemove () {
         return type == BucketType::EAR;
+    }
+
+// method to return if type is normal
+    bool isNormal() const {
+        return type == BucketType::NORMAL;
     }
 
 // friend output operator
