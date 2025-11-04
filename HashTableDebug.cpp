@@ -13,7 +13,7 @@ using namespace std;
 int main() {
     // creates hash-table named ht1
     HashTable ht1;
-
+// ======== insertion test ================================
     ht1.insert("Jordan", 42);
     ht1.insert("Herbert", 120);
     ht1.insert("Katie", 22);
@@ -24,7 +24,7 @@ int main() {
     cout << "Size: " << ht1.size() << endl;
     cout << "Capacity: " << ht1.capacity() << endl;
     cout << "Alpha Load Factor: " << ht1.alpha() << endl;
-
+// ========================================================
 
     return 0;
 }
