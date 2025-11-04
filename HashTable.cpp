@@ -52,6 +52,7 @@ bool HashTable::insert(const std::string& key, const size_t& value) {
  }
  return false;
 }
+
 /**
  * Method: remove
  * If the key is found in the table it will erase the key-value pair from the table.
@@ -60,6 +61,7 @@ bool HashTable::insert(const std::string& key, const size_t& value) {
 bool HashTable::remove(const std::string& key) {
 
 }
+
 /**
  * Method: contains
  * Will return true if key is in table
@@ -68,6 +70,7 @@ bool HashTable::remove(const std::string& key) {
 bool HashTable::contains(const string& key) const {
 
 }
+
 /**
 * If the key is found in the table, find will return the value associated with
 * that key. If the key is not in the table, find will return something called
@@ -80,6 +83,7 @@ bool HashTable::contains(const string& key) const {
 std::optional<size_t> HashTable::get(const string& key) const {
 
 }
+
 /**
 * The bracket operator lets us access values in the map using a familiar syntax,
 * similar to C++ std::map or Python dictionaries. It behaves like get, returnin
@@ -106,6 +110,7 @@ size_t& HashTable::operator[](const string& key) {
 std::vector<std::string> HashTable::keys() const {
 
 }
+
 /**
 * alpha returns the current load factor of the table, or size/capacity. Since
 * alpha returns a double,make sure to properly cast the size and capacity, which
@@ -118,6 +123,7 @@ std::vector<std::string> HashTable::keys() const {
 double HashTable::alpha() const {
 
 }
+
 /**
 * capacity returns how many buckets in total are in the hash table. The time
 * complexity for this algorithm must be O(1).
@@ -125,6 +131,7 @@ double HashTable::alpha() const {
 size_t HashTable::capacity() const {
 
 }
+
 /**
 * The size method returns how many key-value pairs are in the hash table. The
 * time complexity for this method must be O(1)
