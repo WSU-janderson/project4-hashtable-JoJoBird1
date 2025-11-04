@@ -30,20 +30,20 @@ HashTable::HashTable(size_t initCapacity)
  * Otherwise if a duplicate is found it'll return false.
 */
 bool HashTable::insert(const std::string& key, const size_t& value) {
- if (alpha() > 0.5) {
+ if (alpha() >= 0.5) {
   resize();
  }
  size_t index = hash<std::string>{} (key) % tCapacity;
-
+// for loop iterate through hash
  for (size_t i = 0; i < tCapacity; i++) {
   size_t pIndex = (index + i) % tCapacity;
 
   HashTableBucket& bucket = table[pIndex];
-
+// duplicate key was found
   if (bucket.isNormal() && bucket.getKey() == key) {
    return false;
   }
-
+// if condition for empty slot
   if (bucket.isEmpty()) {
    bucket.load(key, value);
    count++;
@@ -60,15 +60,15 @@ bool HashTable::insert(const std::string& key, const size_t& value) {
 */
 bool HashTable::remove(const std::string& key) {
  size_t index = hash<std::string>{}(key) % tCapacity;
-
+// for loop iterate through hash
  for (size_t i = 0; i < tCapacity; i++) {
   size_t pIndex = (index + i) % tCapacity;
   HashTableBucket& bucket = table[pIndex];
-
+// if condition to check if spot was never used
   if (bucket.isEmptySinceStart()) {
    return false;
   }
-
+// if condition found key
   if (bucket.isNormal() && bucket.getKey() == key) {
    bucket.makeEar();
    count--;
@@ -85,15 +85,15 @@ bool HashTable::remove(const std::string& key) {
 */
 bool HashTable::contains(const string& key) const {
  size_t index = hash<std::string>{}(key) % tCapacity;
-
+// for loop iterate through hash
  for (size_t i = 0; i < tCapacity; i++) {
   size_t pIndex = (index + 1) % tCapacity;
   const HashTableBucket& bucket = table[pIndex];
-
+//if condition to check if spot was never used
   if (bucket.isEmptySinceStart()) {
    return false;
   }
-
+// if condition found key
   if (bucket.isNormal() && bucket.getKey() == key) {
    return true;
   }
@@ -102,26 +102,33 @@ bool HashTable::contains(const string& key) const {
 }
 
 /**
+ *Method: get
 * If the key is found in the table, find will return the value associated with
 * that key. If the key is not in the table, find will return something called
-* nullopt, which is a special value in C++. The find method returns an
-* optional<int>, which is a way to denote a method might not have a valid value
-* to return. This approach is nicer than designating a special value, like -1, to
-* signify the return value is invalid. It's also much better than throwing an
-* exception if the key is not found.
+* nullopt.
 */
 std::optional<size_t> HashTable::get(const string& key) const {
-
+ size_t index = hash<std::string>{}(key) % tCapacity;
+// for loop iterate through hash
+ for (size_t i = 0; i < tCapacity; i++) {
+  size_t pIndex = (index +1) % tCapacity;
+  const HashTableBucket& bucket = table[pIndex];
+// if condition to check if spot was never used
+  if (bucket.isEmptySinceStart()) {
+   return std::nullopt;
+  }
+// if condition to check if key was found
+  if (bucket.isNormal() && bucket.getKey() == key) {
+   return bucket.getValue();
+  }
+ }
+ return std::nullopt;
 }
 
 /**
-* The bracket operator lets us access values in the map using a familiar syntax,
-* similar to C++ std::map or Python dictionaries. It behaves like get, returnin
-* the value associated with a given key:
- int idNum = hashTable[“James”];
-* Unlike get, however, the bracker operator returns a reference to the value,
-* which allows assignment:
- hashTable[“James”] = 1234;
+ * Method: operator[]
+ * returns a reference to the value associated with a given key
+
  If the key is not
 * in the table, returning a valid reference is impossible. You may choose to
 * throw an exception in this case, but for our implementation, the situation
@@ -129,13 +136,22 @@ std::optional<size_t> HashTable::get(const string& key) const {
 * to access keys not in the table inside the bracket operator method.
 */
 size_t& HashTable::operator[](const string& key) {
-
+ size_t index = hash<std::string>{}(key) % tCapacity;
+// for loop to iterate through hash
+ for (size_t i = 0; i < tCapacity; i++) {
+  size_t pIndex = (index + i) % tCapacity;
+  HashTableBucket& bucket = table[pIndex];
+// if condition to check key found
+  if (bucket.isNormal() && bucket.getKey() == key) {
+   return bucket.getValue();
+  }
+ }
+ throw runtime_error("Key not found");
 }
 
 /**
-* keys returns a std::vector (C++ version of ArrayList, or simply list/array)
-* with all of the keys currently in the table. The length of the vector should be
-* the same as the size of the hash table.
+ * Method: keys
+* returns a std::vector with all of the keys currently in the table
 */
 std::vector<std::string> HashTable::keys() const {
 
