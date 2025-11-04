@@ -154,35 +154,93 @@ size_t& HashTable::operator[](const string& key) {
 * returns a std::vector with all of the keys currently in the table
 */
 std::vector<std::string> HashTable::keys() const {
+ vector<string> allKeys;
 
+ for (const auto& bucket : table) {
+  if (bucket.isNormal()) {
+   allKeys.push_back(bucket.getKey());
+  }
+ }
+ return allKeys;
 }
 
 /**
-* alpha returns the current load factor of the table, or size/capacity. Since
-* alpha returns a double,make sure to properly cast the size and capacity, which
-* are size_t, to avoid size_teger division. You can cast a size_t num to a double
-* in C++ like:
-                  static_cast<double>(num)
+ * Method: alpha
+ * returns the current load factor of the table, or size/capacity. Since
+* alpha returns a double,make sure to properly cast the size and capacity.
  The time complexity
 * for this method must be O(1).
  */
 double HashTable::alpha() const {
-
+ return static_cast<double>(count) / static_cast<double>(tCapacity);
 }
 
 /**
-* capacity returns how many buckets in total are in the hash table. The time
+ * Method: capacity
+* returns how many buckets in total are in the hash table. The time
 * complexity for this algorithm must be O(1).
 */
 size_t HashTable::capacity() const {
-
+ return tCapacity;
 }
 
 /**
-* The size method returns how many key-value pairs are in the hash table. The
+ * Method: size
+* returns how many key-value pairs are in the hash table. The
 * time complexity for this method must be O(1)
 */
 size_t HashTable::size() const {
-
+ return count;
 }
 
+/**
+ * Method: resize
+ * resizes the hash-table
+ */
+void HashTable::resize() {
+ size_t newCapacity = tCapacity * 2;
+ vector<HashTableBucket> newTable(newCapacity);
+
+ for (auto& bucket : table) {
+  if (bucket.isNormal()) {
+   size_t index = hash<std::string>{}(bucket.getKey()) % newCapacity;
+
+   for (size_t i = 0; i < newCapacity; i ++) {
+    size_t pIndex = (index + i) % newCapacity;
+    if (newTable[pIndex].isEmpty()) {
+     newTable[pIndex].load(bucket.getKey(), bucket.getValue());
+     break;
+    }
+   }
+  }
+ }
+ table = move(newTable);
+ tCapacity = newCapacity;
+}
+
+
+/**
+ * Method: operator
+ * prints out hash-table
+ */
+ostream& operator<<(ostream& os, const HashTable& ht1) {
+ for (size_t i = 0; i < ht1.tCapacity; i++) {
+  const HashTableBucket& bucket = ht1.table[i];
+
+  if (bucket.isNormal()) {
+   os << "Bucket " << i << ": " << bucket.getKey() << ", " << bucket.getValue() << endl;
+  }
+ }
+ return os;
+}
+
+/**
+ * Method: operator single bucket
+ * prints out single bucket
+ */
+ostream& operator<<(ostream& os, const HashTableBucket& bucket) {
+ if (bucket.isNormal()) {
+  os << "< " << bucket.getKey() << ", " << bucket.getValue() << " >" << endl;
+ }
+ return os;
+}
